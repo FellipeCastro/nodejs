@@ -1,3 +1,7 @@
+SHOW TABLES;
+
+DESCRIBE usuarios;
+
 CREATE TABLE usuarios(
     nome VARCHAR(50), 
     email VARCHAR(100),
@@ -21,3 +25,11 @@ INSERT INTO usuarios(nome, email, idade) VALUES(
     "anamaria@gmail.com", 
     20
 );
+
+SELECT * FROM usuarios;
+
+SELECT * FROM usuarios WHERE idade >= 18;
+
+DELETE FROM usuarios; /*Deleta TODOS registros*/
+
+DELETE FROM usuarios WHERE nome = "João Silva";
