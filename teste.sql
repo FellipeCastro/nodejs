@@ -35,3 +35,7 @@ DELETE FROM usuarios; /*Deleta TODOS registros*/
 DELETE FROM usuarios WHERE nome = "João Silva";
 
 UPDATE usuarios SET nome = "Pedro Felix", email = "pedrofelix@gmail.com", idade = 24 WHERE nome = "Fellipe Castro";
+
+npm install --save sequelize
+
+npm install --save mysql2
