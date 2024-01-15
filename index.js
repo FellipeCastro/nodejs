@@ -2,7 +2,6 @@ const express = require("express")
 const app = express()
 const handlebars = require("express-handlebars")
 const bodyParser = require("body-parser")
-const Sequelize = require("sequelize")
 
 // Config  
     // Tamplate Engine
@@ -12,11 +11,6 @@ const Sequelize = require("sequelize")
     // Body Parser
         app.use(bodyParser.urlencoded({extended: false}))
         app.use(bodyParser.json())
-    // Conexão com o banco de dados MySQL        
-        const sequelize = new Sequelize("teste", "root", "Fsc#1531", {
-            host: "localhost",
-            dialect: "mysql"
-        })
 // Rotas
     app.get("/cad", (req, res) => {
         res.render("formulario")
