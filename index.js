@@ -19,6 +19,9 @@ const Sequelize = require("sequelize")
     app.get("/cad", (req, res) => {
         res.render("formulario")
     })
+    app.post("/add", (req, res) => {
+        res.send("Formulario recebido")
+    })
 
 app.listen(8081, () => {
     console.log("Servidor rodando")
