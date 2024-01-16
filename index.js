@@ -14,7 +14,10 @@ const Post = require("./models/Post")
         app.use(bodyParser.json())
 // Rotas
     app.get("/", (req, res) => {
-        res.sendFile(__dirname + "/index.html")
+        Post.all({order: [["id", "DESC"]]})
+        .then((posts) => {
+            res.sendFile(__dirname + "/index.html", {posts: posts}) // handlebars
+        })        
     })
 
     app.get("/cad", (req, res) => {
