@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const app = express()
 const admin = require('./routes/admin.js')
 const path = require('path')
+const { default: mongoose } = require('mongoose')
 // const mongoose = require("mongoose")
 
 // Configurações
@@ -19,6 +20,13 @@ app.engine('handlebars', handlebars.engine)
 app.set('view engine', 'handlebars')
 
 // Mongoose
+const Schema = mongoose.Schema
+mongoose.connect('mongodb+srv://fehcastru:MGytjSZP2IIO0ZqX@cluster0.xkxence.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+.then(()=>{
+    console.log('MongoDB conectado')
+}).catch((err)=> {
+    console.log(`Erro ao conectar ao MongoDB: ${err}`)
+})
 
 // Public
 app.use(express.static(path.join(__dirname, 'public')))
