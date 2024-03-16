@@ -21,16 +21,33 @@ router.get('/categorias/add', (req, res) => {
 })
 
 router.post('/categorias/nova', (req, res) => {
-    const novaCategoria = {
-        nome: req.body.nome,
-        slug: req.body.slug,
+    let erros = []
+
+    if (!req.body.nome || typeof req.body.nome == undefined || req.body.nome == null) {
+        erros.push({ texto: 'A categoria deve conter um nome' })
+    } 
+    
+    if (!req.body.slug || typeof req.body.sulg == undefined || req.body.slug == null) {
+        erros.push({ texto: 'A categoria deve conter um slug' })
     }
 
-    new Categoria(novaCategoria).save().then(() => {
-        console.log('Categoria cadastrada com sucesso')
-    }).catch((err) => {
-        console.log(`Erro ao cadastrar categoria: ${err}`)
-    })
+    if (erros.length > 0) {
+        res.render('admin/addcategorias', {erros: erros})
+    } else {
+        const novaCategoria = {
+            nome: req.body.nome,
+            slug: req.body.slug,
+        }
+
+        new Categoria(novaCategoria).save().then(() => {
+            req.flash('success_msg', 'Categoria cadastrada com sucesso')
+            res.redirect('/admin/categorias')
+        }).catch((err) => {
+            req.flash('error_msg', 'Erro ao cadastrar categoria, tente novamente')
+            res.redirect('/admin')
+            console.log(err)
+        })
+    }
 })
 
 module.exports = router
