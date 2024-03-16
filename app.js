@@ -31,6 +31,11 @@ mongoose.connect('mongodb+srv://fehcastru:MGytjSZP2IIO0ZqX@cluster0.xkxence.mong
 // Public
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.use((req, res, next) => {
+    console.log('Meddleware')
+    next()
+})
+
 // Rotas
 app.use('/admin', admin)
 
