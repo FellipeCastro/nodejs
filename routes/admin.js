@@ -4,6 +4,8 @@ const mongoose = require('mongoose')
 const { reset } = require('nodemon')
 require('../models/Categoria.js')
 const Categoria = mongoose.model('categorias')
+require('../models/Postagem.js')
+const Postagem = mongoose.model('postagens')
 
 // Rota padrão
 router.get('/', (req, res) => {
@@ -123,6 +125,51 @@ router.get('/postagens/add', (req, res) => {
         res.redirect('/admin')
         console.log(err)        
     })    
+})
+
+router.post('/postagens/nova', (req, res) => {
+    let erros = []
+
+    if (!req.body.titulo || typeof req.body.titulo == undefined || req.body.titulo == null) {
+        erros.push({ texto: 'A postagem deve conter um título' })
+    } 
+    
+    if (!req.body.slug || typeof req.body.sulg == undefined || req.body.slug == null) {
+        erros.push({ texto: 'A postagem deve conter um slug' })
+    }
+
+    if (!req.body.descricao || typeof req.body.descricao == undefined || req.body.descricao == null) {
+        erros.push({ texto: 'A postagem deve conter uma descreção' })
+    }
+
+    if (!req.body.conteudo || typeof req.body.conteudo == undefined || req.body.conteudo == null) {
+        erros.push({ texto: 'A postagem deve conter um conteúdo' })
+    }
+    
+    if (req.body.categoria == '0') {
+        erros.push({ texto: 'Categoria inválida, registre uma categoria' })
+    }
+
+    if (erros.length > 0) {
+        res.render('admin/addpostagem', {erros: erros})
+    } else  {
+        const novaPostagem = {
+            titulo: req.body.titulo,
+            slug: req.body.slug,
+            descricao: req.body.descricao,
+            conteudo: req.body.conteudo,
+            categoria: req.body.categoria
+        }
+
+        new Postagem(novaPostagem).save().then(() => {
+            req.flash('success_msg', 'Postagem criada com sucesso!')
+            res.redirect('/admin/postagens')
+        }).catch((err) => {
+            req.flash('error_msg', 'Erro ao criar postagem')
+            res.redirect('/admin/postagens')
+            console.log(err)
+        })
+    }
 })
 
 module.exports = router
