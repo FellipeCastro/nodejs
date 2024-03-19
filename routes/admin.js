@@ -5,14 +5,12 @@ const { reset } = require('nodemon')
 require('../models/Categoria.js')
 const Categoria = mongoose.model('categorias')
 
+// Rota padrão
 router.get('/', (req, res) => {
     res.render('admin/index')
 })
 
-router.get('/posts', (req, res) => {
-    res.send('POSTS')
-})
-
+// Categorias
 router.get('/categorias', (req, res) => {
     Categoria.find().lean().sort({ date: 'desc' }).then((categorias) => {
         res.render('admin/categorias', {categorias: categorias})
@@ -110,6 +108,21 @@ router.post('/categorias/deletar', (req, res) => {
         res.redirect('/admin/categorias')
         console.log(err)
     })
+})
+
+//Postagens
+router.get('/postagens', (req, res) => {
+    res.render('admin/postagens')
+})
+
+router.get('/postagens/add', (req, res) => {
+    Categoria.find().lean().then((categorias) => {
+        res.render('admin/addpostagem', { categorias: categorias })
+    }).catch((err) => {
+        req.flash('error_msg', 'Erro ao renderizar formulário')
+        res.redirect('/admin')
+        console.log(err)        
+    })    
 })
 
 module.exports = router
