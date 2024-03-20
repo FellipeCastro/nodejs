@@ -10,7 +10,13 @@
             <h4>{{titulo}}</h4>
             <p>{{descricao}}</p>
             <small>{{data}}</small> <br>
-            <small>{{categoria.nome}}</small>
+            <small>{{categoria.nome}}</small> <br>
+
+            <div class="btn-group">
+                <a href="/admin/postagens/edit/{{_id}}">
+                    <button class="btn btn-success mt-2">Editar</button>
+                </a>
+            </div>
         </div>
     </div>
 {{else}}
