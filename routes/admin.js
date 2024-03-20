@@ -180,9 +180,9 @@ router.post('/postagens/nova', (req, res) => {
 
 router.get('/postagens/edit/:id', (req, res) => {
 
-    Postagem.findOne({ _id: req.params.id }).then((postagem) => {
+    Postagem.findOne({ _id: req.params.id }).lean().then((postagem) => {
 
-        Categoria.find().then((categorias) => {
+        Categoria.find().lean().then((categorias) => {
             res.render('admin/editpostagens', { categorias: categorias, postagem: postagem })
         }).catch((err) => {
             req.flash('error_msg', 'Erro ao listar categorias')
@@ -215,6 +215,17 @@ router.post('/postagens/edit', (req, res) => {
         })
     }).catch((err) => {
         req.flash('error_msg', 'Erro ao editar postagem')
+        res.redirect('/admin/postagens')
+        console.log(err)
+    })
+})
+
+router.get('/postagens/deletar/:id', (req, res) => {
+    Postagem.deleteOne({ _id: req.params.id }).then((() => {
+        req.flash('success_msg', 'Postagem deletada com sucesso')
+        res.redirect('/admin/postagens')
+    })).catch((err) => {
+        req.flash('error_msg', 'Erro ao deletar postagem')
         res.redirect('/admin/postagens')
         console.log(err)
     })
