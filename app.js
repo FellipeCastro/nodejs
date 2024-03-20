@@ -9,6 +9,8 @@ const path = require('path')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('connect-flash')
+require('./models/Postagem.js')
+const Postagem = mongoose.model('postagens')
 
 // Configurações
 
@@ -49,6 +51,20 @@ mongoose.connect('mongodb+srv://fehcastru:MGytjSZP2IIO0ZqX@cluster0.xkxence.mong
 app.use(express.static(path.join(__dirname, 'public')))
 
 // Rotas
+app.get('/', (req, res) => {
+    Postagem.find().lean().populate('categoria').sort({ data: 'desc' }).then((postagens) => {
+        res.render('index', { postagens: postagens })
+    }).catch((err) => {
+        req.flash('error_msg', 'Erro ao renderizar postagens')
+        res.redirect('/404')
+        console.log(err)
+    })
+})
+
+app.get('/404', (req, res) => {
+    res.send('Erro 404')
+})
+
 app.use('/admin', admin)
 
 // Outros

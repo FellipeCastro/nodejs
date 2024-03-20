@@ -129,7 +129,7 @@ router.get('/postagens/add', (req, res) => {
     }).catch((err) => {
         req.flash('error_msg', 'Erro ao renderizar formulário')
         res.redirect('/admin')
-        console.log(err)        
+        console.log(err)
     })    
 })
 
