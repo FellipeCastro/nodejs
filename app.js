@@ -10,10 +10,15 @@ const path = require('path')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('connect-flash')
+
 require('./models/Postagem.js')
 const Postagem = mongoose.model('postagens')
+
 require('./models/Categoria.js')
 const Categoria = mongoose.model('categorias')
+
+const passport = require('passport')
+require('./config/auth.js')(passport)
 
 // Configurações
 
@@ -23,6 +28,8 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(flash())
 
 // Middleware
