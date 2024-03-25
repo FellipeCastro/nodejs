@@ -1,14 +1,18 @@
-<div class="p-5 mb-4 bg-body-tertiary rounded-3">
-    <div class="container-fluid py-5">
-    <h1 class="display-5 fw-bold">Bem vindo ao nosso Blog</h1>
-    <p class="col-md-8 fs-4">Aqui você pode se atualizar das notícias cotidianas e pode postar suas experiências com todos.</p>
-    <button class="btn btn-primary btn-lg" type="button">Crie uma conta</button>
-    </div>
+
+
+<h2>Postagens recentes:</h2>
+
+<div class="mb-2 mt-4">
+    <a href="/admin/categorias">
+        <button class="btn btn-success">Nova categoria</button>
+    </a>
+    
+    <a href="/admin/postagens">
+        <button class="btn btn-success">Nova postagem</button>
+    </a>
 </div>
 
 <hr>
-
-<h2>Postagens recentes:</h2>
 
 {{#each postagens}}
 <div class="card mt-4">
