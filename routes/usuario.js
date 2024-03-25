@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
+const passport = require('passport')
+
 require('../models/Usuario.js')
 const Usuario = mongoose.model('usuarios')
 
@@ -72,6 +74,14 @@ router.post('/registro', (req, res) => {
 
 router.get('/login', (req, res) => {
     res.render('usuarios/login')
+})
+
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/usuarios/login',
+        failureFlash: true
+    })(req, res, next)
 })
 
 module.exports = router

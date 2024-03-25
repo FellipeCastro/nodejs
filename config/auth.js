@@ -6,16 +6,16 @@ require('../models/Usuario.js')
 const Usuario = mongoose.model('usuarios')
 
 module.exports = (passport) => {
-    passport.use(new localStrategy({ usernameField: 'email' }, (email, senha, done) => {
+    passport.use(new localStrategy({ usernameField: 'email', passwordField: 'senha' }, (email, senha, done) => {
         Usuario.findOne({ email: email }).lean().then((usuario) => {
             if (!usuario) {
                 return done(null, false, { message: 'Esta conta não existe' })
             } else {
-                bcrypt.compare(senha, usuario.senha, (erro, batem) => {
-                    if (batem) {
-                        return done(null, user)
+                bcrypt.compare(senha, usuario.senha, (erro, senhaCorreta) => {
+                    if (senhaCorreta) {
+                        return done(null, usuario)
                     } else {
-                        return done(null, false, 'Senha incorreta')
+                        return done(null, false, { message: 'Senha incorreta' })
                     }
                 })
             }
@@ -23,12 +23,15 @@ module.exports = (passport) => {
     }))
 
     passport.serializeUser((usuario, done) => {
-        done(null, usuario.id)
+        done(null, usuario)
     })
-
+    
     passport.deserializeUser((id, done) => {
-        Usuario.findById(id, (err, usuario) => {
-            done(err, usuario)
+        Usuario.findById(id).lean().then((usuario)=>{
+            done(null, usuario)
+        }).catch((err)=>{
+             done (null, false, { message: 'Algo deu errado' })
         })
+            
     })
 }
