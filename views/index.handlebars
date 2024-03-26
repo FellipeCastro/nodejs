@@ -1,0 +1,36 @@
+<div id="jumbotron" class="container bg-light p-4 rounded my-4">
+    <h1>Blog de notícias</h1>
+    <hr>
+    <p class="text-justify">
+        Bem-vindo ao nosso blog de notícias, onde trazemos as principais atualizações de todo o mundo, além de que, oferecemos a oportunidade de cadastro de notícias por nossos leitores. Essa abordagem permite uma visão mais humana e diversificada dos eventos, enriquecendo nossa cobertura com perspectivas locais e experiências pessoais. Junte-se a nós para compartilhar e ampliar a compreensão coletiva dos acontecimentos ao redor do mundo.
+    </p>
+
+    <div class="mb-2 mt-4">
+        <a href="/admin/categorias">
+            <button class="btn btn-success">Nova categoria</button>
+        </a>
+        
+        <a href="/admin/postagens">
+            <button class="btn btn-success">Nova postagem</button>
+        </a>
+    </div>
+</div>
+
+<h2>Postagens recentes:</h2>
+
+<hr>
+
+{{#each postagens}}
+<div class="card mt-4">
+    <div class="card-body">
+        <h3>{{titulo}}</h3>
+        <p>{{descricao}}</p>
+        <a href="/postagem/{{slug}}"><button class="btn btn-success">Leia mais</button></a>
+        <hr>
+        <small>{{categoria.nome}}</small> <br>
+        <small>Data da publicação: {{data}}</small>
+    </div>
+</div>
+{{else}}
+    <h4>Nenhuma postagem registrada</h4>
+{{/each}}

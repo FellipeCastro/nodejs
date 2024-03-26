@@ -1,0 +1,25 @@
+<h4 class="mb-4">Categorias: </h4>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <tbody>
+                    {{#each categorias}}
+                    <tr>
+                        <td>
+                            <a href="/categorias/{{slug}}">
+                                <h5>{{nome}}</h5>
+                            </a>
+                        </td>
+                    </tr>
+                    {{else}}
+                    <tr>
+                        <td colspan="1">Nenhuma categoria registrada!</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
