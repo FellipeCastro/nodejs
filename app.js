@@ -1,4 +1,5 @@
 // Carregando Módulos
+require('dotenv').config()
 const express = require('express')
 const exphbs = require('express-handlebars')
 const handlebars = exphbs.create({})
@@ -51,8 +52,11 @@ app.engine('handlebars', handlebars.engine)
 app.set('view engine', 'handlebars')
 
 // Mongoose
+const dbUser = process.env.DB_USER
+const dbPassword = process.env.DB_PASS
+
 const Schema = mongoose.Schema
-mongoose.connect('mongodb+srv://fehcastru:MGytjSZP2IIO0ZqX@cluster0.xkxence.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@cluster0.xkxence.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`)
 .then(()=>{
     console.log('MongoDB conectado')
 }).catch((err)=> {
